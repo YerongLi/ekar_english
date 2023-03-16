@@ -231,9 +231,9 @@ def main():
 
     # Setup logging
     logging.basicConfig(
+        filename=''output.log'
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",
-        handlers=[logging.StreamHandler(sys.stdout)],
     )
 
     if training_args.should_log:
