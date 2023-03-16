@@ -434,7 +434,7 @@ def main():
         data_collator=data_collator,
         compute_metrics=compute_metrics,
     )
-    logger.info('start training')
+
     # Training
     if training_args.do_train:
         checkpoint = None
@@ -442,7 +442,9 @@ def main():
             checkpoint = training_args.resume_from_checkpoint
         elif last_checkpoint is not None:
             checkpoint = last_checkpoint
+        logger.info('trainer.train starts')
         train_result = trainer.train(resume_from_checkpoint=checkpoint)
+        logger.info('trainer.train ends')
         trainer.save_model()  # Saves the tokenizer too for easy upload
         metrics = train_result.metrics
 
