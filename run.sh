@@ -6,6 +6,6 @@ python run_swag.py \
 --learning_rate 5e-5 \
 --num_train_epochs 3 \
 --output_dir /tmp/swag_base \
---per_gpu_eval_batch_size=4 \
---per_device_train_batch_size=4 \
+--per_gpu_eval_batch_size=10 \
+--per_device_train_batch_size=10 \
 --overwrite_output
