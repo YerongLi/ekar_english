@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=0,1
+export CUDA_VISIBLE_DEVICES=""
 python run_swag.py \
 --model_name_or_path roberta-base \
 --do_train \
