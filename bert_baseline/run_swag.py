@@ -425,6 +425,7 @@ def main():
         return {"accuracy": (preds == label_ids).astype(np.float32).mean().item()}
 
     # Initialize our Trainer
+    logger.info('Define the trainer=Trainer')
     trainer = Trainer(
         model=model,
         args=training_args,
