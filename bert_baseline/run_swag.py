@@ -213,7 +213,6 @@ class DataCollatorForMultipleChoice:
 
 
 def main():
-    logger.info(f'Logger start: {os.uname()[1]}')
     # See all possible arguments in src/transformers/training_args.py
     # or by passing the --help flag to this script.
     # We now keep distinct sets of args, for a cleaner separation of concerns.
@@ -243,6 +242,7 @@ def main():
 
     log_level = training_args.get_process_log_level()
     logger.setLevel(log_level)
+    logger.info(f'Logger start: {os.uname()[1]}')
     datasets.utils.logging.set_verbosity(log_level)
     transformers.utils.logging.set_verbosity(log_level)
     transformers.utils.logging.enable_default_handler()
