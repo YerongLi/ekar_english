@@ -4,10 +4,10 @@ python run_swag.py \
 --do_train \
 --do_eval \
 --learning_rate 5e-5 \
---num_train_epochs 3 \
+--num_train_epochs 1 \
 --output_dir ./log \
---per_gpu_eval_batch_size=11 \
---per_device_train_batch_size=11 \
+--per_gpu_eval_batch_size=12 \
+--per_device_train_batch_size=12 \
 --overwrite_output \
 --logging_strategy="steps" \
 --logging_steps=500
