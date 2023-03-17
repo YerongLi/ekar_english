@@ -10,4 +10,4 @@ python run_swag.py \
 --per_device_train_batch_size=11 \
 --overwrite_output \
 --logging_strategy="steps" \
---logging_steps=500
+--logging_steps=10
