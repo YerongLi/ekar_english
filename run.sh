@@ -9,4 +9,4 @@ python run_swag.py \
 --per_gpu_eval_batch_size=11 \
 --per_device_train_batch_size=11 \
 --overwrite_output \
---should_log
+-should_log
