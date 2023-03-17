@@ -6,7 +6,7 @@ python run_swag.py \
 --learning_rate 5e-5 \
 --num_train_epochs 1 \
 --output_dir ./log \
---per_gpu_eval_batch_size=12 \
+--per_device_eval_batch_size=12 \
 --per_device_train_batch_size=12 \
 --overwrite_output \
 --logging_strategy="steps" \
