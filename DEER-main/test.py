@@ -10,7 +10,7 @@ logger =  multiprocessing.get_logger()
 
 def print(i):
 	logger.info(i)
-with Pool(2) as p:
+with multiprocessing.Pool(2) as p:
   _ = tqdm.tqdm(p.imap(print, range(30)), total=30)
 
 
