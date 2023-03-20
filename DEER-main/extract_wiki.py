@@ -30,6 +30,7 @@ import itertools
 from wikipedia2vec import Wikipedia2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk import word_tokenize
+import logging
 sys.path.append('..')
 
 from tools.BasicUtils import MyMultiProcessing, my_write, my_read_pickle, my_write_pickle
@@ -38,6 +39,9 @@ from tools.TextProcessing import (remove_brackets, find_root_in_span,
                                   build_word_tree_v2)
 from tools.DocProcessing import CoOccurrence
 
+logging.basicConfig('output.log', level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+logger.info(f'Logger start: {os.uname()[1]}')
 
 # Some constants
 extract_wiki_path = 'extract_wiki/'
@@ -919,7 +923,7 @@ if __name__ == '__main__':
         my_write(wikipedia_entity_file, list(wikipedia_entity))
         
     
-        print('correct_mapping_in_cooccur')
+        logger.info('correct_mapping_in_cooccur')
         
         # Load wikipedia2vec
         with bz2.open(w2vec_dump_file) as f_in:
@@ -930,7 +934,7 @@ if __name__ == '__main__':
             wikipedia_entity = set(f_in.read().split('\n'))
     
         # Generate lower-cased entity to original entity mapping
-        print('Generate lower-cased entity to original entity mapping')
+        logg.info[[('Generate lower-cased entity to original entity mapping')
         wikipedia_entity_low2orig_map = defaultdict(list)
         for ent in wikipedia_entity:
             ent_low = ent.lower()
@@ -1148,6 +1152,7 @@ if __name__ == '__main__':
         sample_num = -1
         samples = []
         print(len(target_edges))
+        target_edges[:20000]
         edge_count = 0
         for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
             edge_count += 1
