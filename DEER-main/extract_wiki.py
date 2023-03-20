@@ -1149,7 +1149,7 @@ if __name__ == '__main__':
         
         sample_num = -1
         samples = []
-        target_edges=target_edges[:400000]
+        target_edges=target_edges[:40000]
         logger.info(len(target_edges))
         progress=progress_bar_log(logger)
         edge_count = 0
