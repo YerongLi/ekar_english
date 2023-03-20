@@ -1154,7 +1154,7 @@ if __name__ == '__main__':
         samples = []
         logger.info('Scan edges')
         logger.info(len(target_edges))
-        target_edges = target_edges[:20000] # 
+        target_edges = target_edges[:10000] # 
         edge_count = 0
         progress = progress_bar_log(logger, div=100)
         for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
