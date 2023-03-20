@@ -869,7 +869,7 @@ def sample_to_neo4j(sample:dict):
     cmd.append('MATCH (ent1:ENT {ent:"%s"}), (ent2:ENT {ent:"%s"}) CREATE (ent1)-[:OUT {sent:"%s", pair:"%s <-> %s"}]->(ent2);' % (*sample['pair'], sample['target'].replace('"', '\\"'), *sample['pair']))
     print('\n'.join(cmd))
 
-def collect_sample_fn(edge_idx, edge)
+def collect_sample_fn(edge_idx, edge):
     progress.check(edge_idx, len(target_edges))
     edge_count += 1
     sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
@@ -1166,7 +1166,7 @@ if __name__ == '__main__':
         progress=progress_bar_log(logger)
         edge_count = 0
         logger.info('Start collecting samples')
-        with multiprocessing.Pool(2) as processors:
+        with multiprocessing.Pool(40) as processors:
             _ = tqdm.tqdm(processors.imap(collect_sample_fn, enumerate(target_edges)), total=len(target_edges))        
         logger.info('Saving dataset')
         # for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
