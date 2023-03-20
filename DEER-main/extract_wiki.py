@@ -40,7 +40,7 @@ from tools.TextProcessing import (remove_brackets, find_root_in_span,
                                   build_word_tree_v2)
 from tools.DocProcessing import CoOccurrence
 
-logging.basicConfig('output.log', level=logging.DEBUG)
+logging.basicConfig(filename='output.log', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 logger.info(f'Logger start: {os.uname()[1]}')
 
