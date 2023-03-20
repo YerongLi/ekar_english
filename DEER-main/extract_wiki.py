@@ -1131,7 +1131,7 @@ if __name__ == '__main__':
         source_graph_file = digraph_file if sys.argv[2] == 'true' else graph_file
         target_graph_file = digraph_file if sys.argv[3] == 'true' else graph_file
         context_sent_score_threshold = score_threshold if len(sys.argv) < 5 else float(sys.argv[4])
-        logger.set_verbosity_info(similar_threshold)
+        # logger.set_verbosity_info(similar_threshold)
         logger.info(source_graph_file)
         print(target_graph_file)
         print(context_sent_score_threshold)
