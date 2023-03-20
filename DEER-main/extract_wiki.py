@@ -245,7 +245,6 @@ def generate_clean_phrase(phrase:str):
 def find_dependency_info_from_tree(doc, kw1, kw2):
     '''
     Find the dependency path that connect two entity names in the SpaCy document
-
     ## Return
         The steps from entity one to entity two or to the sub-root node
         The steps from entity two to entity two or to the sub-root node
@@ -346,7 +345,6 @@ def gen_subpath_pattern(path:str):
 def sentence_decompose(doc, kw1:str, kw2:str):
     '''
     Analyze the sentence with two entity names
-
     ## Return
     List of tuples. The returned tuples satisfy that:
         1. There exists a corepath starting with 'i_nsubj"
@@ -454,7 +452,6 @@ class FeatureProcess:
     def batched_feature_process(self, sent:str, pairs):
         '''
         Process one sentence which may contain several pairs of entities
-
         ## Parameters
             sent: str
                 The sentence to be processed
@@ -515,7 +512,6 @@ class CollectPattern:
     def collect_pattern(self, doc, kw1:str, kw2:str)->List[Tuple[str, List[str]]]:
         '''
         Collect subpath pattern between two entities from a SpaCy document
-
         ## Return
             List of corepath and subpath patterns collected from this document between the two entities
         '''
@@ -541,7 +537,6 @@ class CollectPattern:
     def batched_collect_pattern(self, sent, pairs) -> List[str]:
         '''
         Collect subpath patterns from one sentence which may contain several pairs of entities
-
         ## Parameters
             sent: str
                 The sentence to be processed
@@ -578,7 +573,6 @@ def process_line(sent:str, tups:List[Tuple[float, str, str]], sent_note:str, pro
 def process_list(sents:List[str], pairs_list:List[str], processor, status_bar:bool=True):
     '''
     Process a list of sentences with a given processor function.
-
     ## Parameters
         sents: list of str
             A list of sentences
@@ -743,7 +737,6 @@ def generate_sent_graph_from_cooccur(pairs:list, cooccur:dict):
 def generate_sample(target_graph:nx.Graph, source_graph:nx.Graph, ent1:str, ent2:str, max_hop_num:int=2, path_num:int=5, feature:str='score', replaceable=False):
     '''
     Generate dataset sample for a pair of entities
-
     ## Parameters
         target_graph: nx.Graph
             This graph provides target sentences
@@ -924,7 +917,7 @@ if __name__ == '__main__':
         my_write(wikipedia_entity_file, list(wikipedia_entity))
         
     
-        logger.info('correct_mapping_in_cooccur')
+        print('correct_mapping_in_cooccur')
         
         # Load wikipedia2vec
         with bz2.open(w2vec_dump_file) as f_in:
@@ -935,7 +928,7 @@ if __name__ == '__main__':
             wikipedia_entity = set(f_in.read().split('\n'))
     
         # Generate lower-cased entity to original entity mapping
-        logg.info[[('Generate lower-cased entity to original entity mapping')
+        print('Generate lower-cased entity to original entity mapping')
         wikipedia_entity_low2orig_map = defaultdict(list)
         for ent in wikipedia_entity:
             ent_low = ent.lower()
@@ -1138,8 +1131,8 @@ if __name__ == '__main__':
         source_graph_file = digraph_file if sys.argv[2] == 'true' else graph_file
         target_graph_file = digraph_file if sys.argv[3] == 'true' else graph_file
         context_sent_score_threshold = score_threshold if len(sys.argv) < 5 else float(sys.argv[4])
-        logger.info(similar_threshold)
-        print(source_graph_file)
+        logger.set_verbosity_info(similar_threshold)
+        logger.info(source_graph_file)
         print(target_graph_file)
         print(context_sent_score_threshold)
         target_graph:nx.Graph = my_read_pickle(target_graph_file)
@@ -1152,14 +1145,13 @@ if __name__ == '__main__':
         
         sample_num = -1
         samples = []
-        logger.info('Scan edges')
+        target_edges=target_edges[:20000]
         logger.info(len(target_edges))
-        target_edges = target_edges[:10000] # 
+        progress=progress_bar_log(logger)
         edge_count = 0
-        progress = progress_bar_log(logger, div=100)
         for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
-            edge_count += 1
             progress.check(edge_idx, len(target_edges))
+            edge_count += 1
             sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
             if sample:
                 samples.append(sample)
@@ -1170,7 +1162,7 @@ if __name__ == '__main__':
         dataset_file = extract_wiki_path + 'dataset_%.2f_%s2%s_%.2f.json' % (similar_threshold, 'dir' if sys.argv[2] == 'true' else 'undir', 'dir' if sys.argv[3] == 'true' else 'undir', context_sent_score_threshold)
         with open(dataset_file, 'w') as f_out:
             json.dump(samples, f_out)
-            print(len(samples))
+            logger.info(len(samples))
             
 
     elif sys.argv[1] == 'split_dataset':
@@ -1252,4 +1244,4 @@ if __name__ == '__main__':
             csv_writer.writerows(scan_result)
         with open('temp_error.csv', 'w') as f_out:
             csv_writer = csv.writer(f_out, delimiter='\t')
-            csv_writer(temp_error)
+            csv_writer(temp_error
