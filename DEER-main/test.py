@@ -8,7 +8,7 @@ logging.basicConfig(filename='test.log',
         datefmt='%Y-%m-%d %H:%M:%S',
         level=logging.DEBUG)
 install_mp_handler()
-logger =  logging.get_logger(__name_)
+logger =  logging.getLogger(__name__)
 logger.info('start')
 def p(i):
 	logger.info(i)
