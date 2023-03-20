@@ -871,7 +871,8 @@ def sample_to_neo4j(sample:dict):
     cmd.append('MATCH (ent1:ENT {ent:"%s"}), (ent2:ENT {ent:"%s"}) CREATE (ent1)-[:OUT {sent:"%s", pair:"%s <-> %s"}]->(ent2);' % (*sample['pair'], sample['target'].replace('"', '\\"'), *sample['pair']))
     print('\n'.join(cmd))
 
-def collect_sample_fn(edge_idx, edge):
+def collect_sample_fn(edge_idx_edge):
+    edge_idx, edge = edge_idx_edge
     progress.check(edge_idx, len(target_edges))
     edge_count += 1
     sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
