@@ -1168,7 +1168,7 @@ if __name__ == '__main__':
         progress=progress_bar_log(logger)
         edge_count = 0
         logger.info('Start collecting samples')
-        with multiprocessing.Pool(80) as processors:
+        with multiprocessing.Pool(40) as processors:
             samples= list(tqdm.tqdm(processors.imap(collect_sample_fn, enumerate(target_edges)), total=len(target_edges)))
         samples = [sample for sample in samples if sample]    
         logger.info('Saving dataset')
