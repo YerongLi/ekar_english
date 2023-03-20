@@ -16,6 +16,6 @@ def pt(i):
 	logger.info(i)
 	return {i}
 with multiprocessing.Pool(4) as p:
-  r = listtqdm.tqdm(p.imap(pt, range(30)), total=30)
+  r = list(tqdm.tqdm(p.imap(pt, range(30)), total=30))
 
 
