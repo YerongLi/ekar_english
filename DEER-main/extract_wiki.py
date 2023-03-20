@@ -32,8 +32,11 @@ from wikipedia2vec import Wikipedia2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk import word_tokenize
 import logging
+
+
 sys.path.append('..')
 
+from multiprocessing_logging import install_mp_handler
 from tools.BasicUtils import MyMultiProcessing, my_write, my_read_pickle, my_write_pickle
 from tools.TextProcessing import (remove_brackets, find_root_in_span, 
                                   nlp, find_span, sent_lemmatize, 
@@ -44,6 +47,7 @@ logging.basicConfig(filename='output.log',
         format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S',
         level=logging.DEBUG)
+install_mp_handler()
 logger = logging.getLogger(__name__)
 logger.info(f'Logger start: {os.uname()[1]}')
 
@@ -865,6 +869,14 @@ def sample_to_neo4j(sample:dict):
     cmd.append('MATCH (ent1:ENT {ent:"%s"}), (ent2:ENT {ent:"%s"}) CREATE (ent1)-[:OUT {sent:"%s", pair:"%s <-> %s"}]->(ent2);' % (*sample['pair'], sample['target'].replace('"', '\\"'), *sample['pair']))
     print('\n'.join(cmd))
 
+def collect_sample_fn(edge_idx, edge)
+    progress.check(edge_idx, len(target_edges))
+    edge_count += 1
+    sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
+    if sample:
+        return sample
+    if (sample_num > 0) and (len(samples) >= sample_num):
+        return None
 
         
 if __name__ == '__main__':
@@ -1149,19 +1161,23 @@ if __name__ == '__main__':
         
         sample_num = -1
         samples = []
-        target_edges=target_edges[:40000]
+        target_edges=target_edges[:80000]
         logger.info(len(target_edges))
         progress=progress_bar_log(logger)
         edge_count = 0
-        for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
-            progress.check(edge_idx, len(target_edges))
-            edge_count += 1
-            sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
-            if sample:
-                samples.append(sample)
-            if (sample_num > 0) and (len(samples) >= sample_num):
-                break
-        print(len(samples) * 1.0 / edge_count)
+        logger.info('Start collecting samples')
+        with multiprocessing.Pool(2) as processors:
+            _ = tqdm.tqdm(processors.imap(pt, enumerate(target_edges)), total=len(target_edges))        
+        logger.info('Saving dataset')
+        # for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
+        #     progress.check(edge_idx, len(target_edges))
+        #     edge_count += 1
+        #     sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
+        #     if sample:
+        #         samples.append(sample)
+        #     if (sample_num > 0) and (len(samples) >= sample_num):
+        #         break
+        # logger.info(len(samples) * 1.0 / edge_count)
     
         dataset_file = extract_wiki_path + 'dataset_%.2f_%s2%s_%.2f.json' % (similar_threshold, 'dir' if sys.argv[2] == 'true' else 'undir', 'dir' if sys.argv[3] == 'true' else 'undir', context_sent_score_threshold)
         with open(dataset_file, 'w') as f_out:
