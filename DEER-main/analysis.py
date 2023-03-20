@@ -14,8 +14,8 @@ with open('pairs.txt', 'w') as f:
 	for i, datapoint in enumerate(dataset):
 		# dict_keys(['pair', 'sim', 'entity', 'target', 'source', 'triple'])
 		k = 'pair'
-		f.write(f'{datapoint[k]}\n')
-		f.write(f'{datapoint['source']}\n')
+		f.write(f'{datapoint["pair"]}\n')
+		f.write(f'{datapoint["source"]}\n')
 		if i > 200: break
 
 logger.info(f'length {len(dataset)}')
