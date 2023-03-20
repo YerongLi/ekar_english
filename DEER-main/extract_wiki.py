@@ -874,7 +874,6 @@ def sample_to_neo4j(sample:dict):
 def collect_sample_fn(edge_idx_edge):
     edge_idx, edge = edge_idx_edge
     progress.check(edge_idx, len(target_edges))
-    edge_count += 1
     sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
     if sample:
         return sample
