@@ -922,7 +922,7 @@ if __name__ == '__main__':
         print('collect_sent_and_cooccur')
         
         wiki_sent_pair = [(wiki_files[i], save_sent_files[i], save_cooccur_files[i], save_title_files[i]) for i in range(len(wiki_files))]
-        p = MyMultiProcessing(10)
+        p = MyMultiProcessing(40)
         output = p.run(get_sentence, wiki_sent_pair)
         
         # Collect wikipedia entities
@@ -1163,12 +1163,12 @@ if __name__ == '__main__':
         
         sample_num = -1
         samples = []
-        target_edges=target_edges[:80000]
+        # target_edges=target_edges[:80000]
         logger.info(len(target_edges))
         progress=progress_bar_log(logger)
         edge_count = 0
         logger.info('Start collecting samples')
-        with multiprocessing.Pool(40) as processors:
+        with multiprocessing.Pool(80) as processors:
             samples= list(tqdm.tqdm(processors.imap(collect_sample_fn, enumerate(target_edges)), total=len(target_edges)))
         samples = [sample for sample in samples if sample]    
         logger.info('Saving dataset')
