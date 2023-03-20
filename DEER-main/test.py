@@ -13,6 +13,6 @@ logger.info('start')
 def pt(i):
 	logger.info(i)
 with multiprocessing.Pool(2) as p:
-  _ = tqdm.tqdm(p.imap(pt, range(30)), total=30)
+  for _ in tqdm.tqdm(p.imap(pt, range(30)), total=30)
 
 

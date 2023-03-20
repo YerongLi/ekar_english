@@ -24,10 +24,12 @@ from urllib.parse import unquote
 from utils import progress_bar_log
 import sys
 import linecache
+import multiprocessing
 import numpy as np
 from typing import List, Tuple
 import bz2
 import itertools
+
 from wikipedia2vec import Wikipedia2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk import word_tokenize
