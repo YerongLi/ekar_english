@@ -21,6 +21,7 @@ import csv
 import networkx as nx
 import pandas as pd
 from urllib.parse import unquote
+from utils import progress_bar_log
 import sys
 import linecache
 import numpy as np
@@ -1137,7 +1138,7 @@ if __name__ == '__main__':
         source_graph_file = digraph_file if sys.argv[2] == 'true' else graph_file
         target_graph_file = digraph_file if sys.argv[3] == 'true' else graph_file
         context_sent_score_threshold = score_threshold if len(sys.argv) < 5 else float(sys.argv[4])
-        print(similar_threshold)
+        logger.info(similar_threshold)
         print(source_graph_file)
         print(target_graph_file)
         print(context_sent_score_threshold)
@@ -1151,11 +1152,14 @@ if __name__ == '__main__':
         
         sample_num = -1
         samples = []
-        print(len(target_edges))
-        target_edges[:20000]
+        logger.info('Scan edges')
+        logger.info(len(target_edges))
+        target_edges = target_edges[:20000] # 
         edge_count = 0
+        progress = progress_bar_log(logger, div=100)
         for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
             edge_count += 1
+            progress.check(edge_idx, len(target_edges))
             sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
             if sample:
                 samples.append(sample)
