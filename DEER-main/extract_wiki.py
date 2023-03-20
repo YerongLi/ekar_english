@@ -1132,20 +1132,21 @@ if __name__ == '__main__':
         target_graph_file = digraph_file if sys.argv[3] == 'true' else graph_file
         context_sent_score_threshold = score_threshold if len(sys.argv) < 5 else float(sys.argv[4])
         # logger.set_verbosity_info(similar_threshold)
-        logger.info(source_graph_file)
-        print(target_graph_file)
-        print(context_sent_score_threshold)
+        logger.info(context_sent_score_threshold)
         target_graph:nx.Graph = my_read_pickle(target_graph_file)
+        logger.info(f'Finishing reading {target_graph_file}')
         target_edges = [edge for edge in target_graph.edges if target_graph.get_edge_data(*edge)['sim'] >= similar_threshold]
         target_graph = target_graph.edge_subgraph(target_edges)
         target_graph = generate_sent_graph_from_graph(target_edges, target_graph, context_sent_score_threshold)
         source_graph:nx.Graph = my_read_pickle(source_graph_file)
+        logger.info(f'Finishing reading {source_graph_file}')
+        
         source_graph = source_graph.edge_subgraph([edge for edge in source_graph.edges if source_graph.get_edge_data(*edge)['sim'] >= similar_threshold])
         source_graph = generate_sent_graph_from_graph(list(source_graph.edges), source_graph, context_sent_score_threshold)
         
         sample_num = -1
         samples = []
-        target_edges=target_edges[:20000]
+        target_edges=target_edges[:400000]
         logger.info(len(target_edges))
         progress=progress_bar_log(logger)
         edge_count = 0
