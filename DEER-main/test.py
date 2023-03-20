@@ -12,9 +12,9 @@ install_mp_handler()
 logger = logging.getLogger(__name__)
 
 logger.info('start')
-def p(i):
+def pt(i):
 	logger.info(i)
 with multiprocessing.Pool(2) as p:
-  _ = tqdm.tqdm(p.imap(p, range(30)), total=30)
+  _ = tqdm.tqdm(p.imap(pt, range(30)), total=30)
 
 
