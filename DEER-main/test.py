@@ -7,7 +7,7 @@ logging.basicConfig(filename='test.log',
         level=logging.DEBUG)
 
 logger =  multiprocessing.get_logger()
-
+logger.info('start')
 def p(i):
 	logger.info(i)
 with multiprocessing.Pool(2) as p:
