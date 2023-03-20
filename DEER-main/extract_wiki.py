@@ -1244,4 +1244,4 @@ if __name__ == '__main__':
             csv_writer.writerows(scan_result)
         with open('temp_error.csv', 'w') as f_out:
             csv_writer = csv.writer(f_out, delimiter='\t')
-            csv_writer(temp_error
+            csv_writer(temp_error)
