@@ -6,7 +6,7 @@ logging.basicConfig(filename='test.log',
         datefmt='%Y-%m-%d %H:%M:%S',
         level=logging.DEBUG)
 
-logger =  multiprocessing.get_logger()
+logger =  multiprocessing.get_logger(__name__)
 logger.info('start')
 def p(i):
 	logger.info(i)
