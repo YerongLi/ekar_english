@@ -10,9 +10,11 @@ logger = logging.getLogger(__name__)
 logger.info(f'Logger start: {os.uname()[1]}')
 
 dataset = json.load(open('extract_wiki/dataset_0.50_undir2dir_0.74.json'))
-for i, datapoint in enumerate(dataset):
-	# dict_keys(['pair', 'sim', 'entity', 'target', 'source', 'triple'])
-	k = 'pair'
-	logger.info(k)
-	logger.info(datapoint[k])
-	if i > 200: break
+with open('pairs.txt', 'w') as f:
+	for i, datapoint in enumerate(dataset):
+		# dict_keys(['pair', 'sim', 'entity', 'target', 'source', 'triple'])
+		k = 'pair'
+		f.write(datapoint[k]+'\n')
+		f.write(datapoint['source']+'\n')
+		if i > 200: break
+out
