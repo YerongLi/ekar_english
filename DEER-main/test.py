@@ -17,6 +17,9 @@ def pt(i):
 	return {i}
 with multiprocessing.Pool(4) as p:
   result = list(tqdm.tqdm(p.imap(pt, range(30)), total=30))
+result.append(None)
+result = [sample for sample in result if sample]    
+
 print(result)
 
 
