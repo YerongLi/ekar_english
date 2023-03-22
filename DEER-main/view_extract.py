@@ -1155,7 +1155,7 @@ if __name__ == '__main__':
         target_edges = [edge for edge in target_graph.edges if target_graph.get_edge_data(*edge)['sim'] >= similar_threshold]
         
         logger.info('Print the first edge in the firs t')
-        logger.info(target_graph.get_edge_data(target_edges[0]*))
+        logger.info(target_graph.get_edge_data(*target_edges[0]))
         # target_graph = target_graph.edge_subgraph(target_edges)
         # target_graph = generate_sent_graph_from_graph(target_edges, target_graph, context_sent_score_threshold)
         # source_graph:nx.Graph = my_read_pickle(source_graph_file)
