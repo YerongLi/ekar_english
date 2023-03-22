@@ -1153,40 +1153,38 @@ if __name__ == '__main__':
         target_graph:nx.Graph = my_read_pickle(target_graph_file)
         logger.info(f'Finishing reading {target_graph_file}')
         target_edges = [edge for edge in target_graph.edges if target_graph.get_edge_data(*edge)['sim'] >= similar_threshold]
-        logger.info('Print the first edge in the first edges')
-        logger.info(target_edges[0])
-        # target_graph = target_graph.edge_subgraph(target_edges)
-        # target_graph = generate_sent_graph_from_graph(target_edges, target_graph, context_sent_score_threshold)
-        # source_graph:nx.Graph = my_read_pickle(source_graph_file)
-        # logger.info(f'Finishing reading {source_graph_file}')
+        target_graph = target_graph.edge_subgraph(target_edges)
+        target_graph = generate_sent_graph_from_graph(target_edges, target_graph, context_sent_score_threshold)
+        source_graph:nx.Graph = my_read_pickle(source_graph_file)
+        logger.info(f'Finishing reading {source_graph_file}')
         
-        # source_graph = source_graph.edge_subgraph([edge for edge in source_graph.edges if source_graph.get_edge_data(*edge)['sim'] >= similar_threshold])
-        # source_graph = generate_sent_graph_from_graph(list(source_graph.edges), source_graph, context_sent_score_threshold)
+        source_graph = source_graph.edge_subgraph([edge for edge in source_graph.edges if source_graph.get_edge_data(*edge)['sim'] >= similar_threshold])
+        source_graph = generate_sent_graph_from_graph(list(source_graph.edges), source_graph, context_sent_score_threshold)
         
-        # sample_num = -1
-        # samples = []
-        # logger.info(len(target_edges))
-        # progress=progress_bar_log(logger)
-        # edge_count = 0
-        # logger.info('Start collecting samples')
-        # with multiprocessing.Pool(40) as processors:
-        #     samples= list(tqdm.tqdm(processors.imap(collect_sample_fn, enumerate(target_edges)), total=len(target_edges)))
-        # samples = [sample for sample in samples if sample]    
-        # logger.info('Saving dataset')
-        # # for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
-        # #     progress.check(edge_idx, len(target_edges))
-        # #     edge_count += 1
-        # #     sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
-        # #     if sample:
-        # #         samples.append(sample)
-        # #     if (sample_num > 0) and (len(samples) >= sample_num):
-        # #         break
-        # # logger.info(len(samples) * 1.0 / edge_count)
+        sample_num = -1
+        samples = []
+        logger.info(len(target_edges))
+        progress=progress_bar_log(logger)
+        edge_count = 0
+        logger.info('Start collecting samples')
+        with multiprocessing.Pool(40) as processors:
+            samples= list(tqdm.tqdm(processors.imap(collect_sample_fn, enumerate(target_edges)), total=len(target_edges)))
+        samples = [sample for sample in samples if sample]    
+        logger.info('Saving dataset')
+        # for edge_idx, edge in enumerate(tqdm.tqdm(target_edges)):
+        #     progress.check(edge_idx, len(target_edges))
+        #     edge_count += 1
+        #     sample = generate_sample(target_graph, source_graph, edge[0], edge[1], max_hop_num=3)
+        #     if sample:
+        #         samples.append(sample)
+        #     if (sample_num > 0) and (len(samples) >= sample_num):
+        #         break
+        # logger.info(len(samples) * 1.0 / edge_count)
     
-        # dataset_file = extract_wiki_path + 'dataset_%.2f_%s2%s_%.2f.json' % (similar_threshold, 'dir' if sys.argv[2] == 'true' else 'undir', 'dir' if sys.argv[3] == 'true' else 'undir', context_sent_score_threshold)
-        # with open(dataset_file, 'w') as f_out:
-        #     json.dump(samples, f_out)
-        #     logger.info(len(samples))
+        dataset_file = extract_wiki_path + 'dataset_%.2f_%s2%s_%.2f.json' % (similar_threshold, 'dir' if sys.argv[2] == 'true' else 'undir', 'dir' if sys.argv[3] == 'true' else 'undir', context_sent_score_threshold)
+        with open(dataset_file, 'w') as f_out:
+            json.dump(samples, f_out)
+            logger.info(len(samples))
             
 
     elif sys.argv[1] == 'split_dataset':
