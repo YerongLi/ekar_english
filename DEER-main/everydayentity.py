@@ -12,7 +12,7 @@ logging.FileHandler('output.log', encoding='utf8')
 install_mp_handler()
 logger = logging.getLogger(__name__)
 logger.info(f'Logger start: {os.uname()[1]}')
-vocabulary = {}
+vocabulary = set()
 with open('../train.json', encoding='utf-8') as f:
 	for line in f.readlines():
 		vocabulary.update(eval(line)['question'].split(':'))
