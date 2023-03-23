@@ -2,6 +2,8 @@ import json
 import logging
 import os
 
+from multiprocessing_logging import install_mp_handler
+
 logging.basicConfig(filename='output.log', 
         format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S',
