@@ -12,5 +12,5 @@ install_mp_handler()
 logger = logging.getLogger(__name__)
 logger.info(f'Logger start: {os.uname()[1]}')
 
-data = json.load(open('../train.json', encoding='utf-8'))
+data = json.loads(open('../train.json', encoding='utf-8'))
 logger.info(type(data))
