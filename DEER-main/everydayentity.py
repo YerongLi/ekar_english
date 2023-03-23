@@ -12,8 +12,6 @@ logging.FileHandler('output.log', encoding='utf8')
 install_mp_handler()
 logger = logging.getLogger(__name__)
 logger.info(f'Logger start: {os.uname()[1]}')
-
 with open('../train.json', encoding='utf-8') as f:
 	for line in f.readlines():
-		# logger.info(line)
-		print(line.encode('utf-8'))
+		logger.info(eval(train)['question'].split(':'))
