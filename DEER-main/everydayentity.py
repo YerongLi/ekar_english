@@ -14,4 +14,4 @@ logger = logging.getLogger(__name__)
 logger.info(f'Logger start: {os.uname()[1]}')
 with open('../train.json', encoding='utf-8') as f:
 	for line in f.readlines():
-		logger.info(eval(train)['question'].split(':'))
+		logger.info(eval(line)['question'].split(':'))
