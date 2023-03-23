@@ -15,4 +15,5 @@ logger.info(f'Logger start: {os.uname()[1]}')
 
 with open('../train.json', encoding='utf-8') as f:
 	for line in f.readlines():
-		logger.info(line)
+		# logger.info(line)
+		print(line)
