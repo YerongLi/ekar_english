@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import pickles
 
 from multiprocessing_logging import install_mp_handler
 
@@ -23,3 +24,5 @@ with open('../validation.json', encoding='utf-8') as f:
 	for line in f.readlines():
 		vocabulary.update(eval(line)['question'].split(':'))
 logger.info(len(vocabulary))
+
+pickles.dump(vocabulary, open('vocab.pkl', 'wb'))
